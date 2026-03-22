@@ -1,0 +1,20 @@
+{
+  "recipe_name": "Example Ale",
+  "batch_liters": 25,
+  "targets": {
+    "og": "1.050",
+    "fg": "1.010",
+    "abv": "5.2%",
+    "ibu": 30
+  },
+  "steps": [
+    {"name": "Heat strike water", "duration_min": 20, "notes": "Prepare mash-in water."},
+    {"name": "Mash at 66C", "duration_min": 60, "notes": "Recirculate if possible."},
+    {"name": "Mash out at 78C", "duration_min": 10},
+    {"name": "Lauter and sparge", "duration_min": 30},
+    {"name": "Boil", "duration_min": 60, "notes": "Add bittering hops at start."},
+    {"name": "Chill to pitching temperature", "duration_min": 25},
+    {"name": "Pitch yeast", "duration_min": 5},
+    {"name": "Primary fermentation", "duration_min": 20160, "notes": "~14 days"}
+  ]
+}

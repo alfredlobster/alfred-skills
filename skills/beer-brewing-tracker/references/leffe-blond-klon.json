@@ -1,0 +1,31 @@
+{
+  "recipe_name": "Leffe Blond Kloon (Chefe Blond kit)",
+  "source": "https://www.hjemmebryggeren.dk/files/products/894/1/pdf/leffe%20blond%20klon.pdf",
+  "batch_liters": 25,
+  "targets": {
+    "og": "1.065",
+    "fg": "1.014",
+    "abv": "6.7%",
+    "ibu": 22,
+    "ebc": 11
+  },
+  "notes": [
+    "Kit includes light candy sugar and cardamom.",
+    "Ferment at 18-22C for about 14 days.",
+    "Prime with ~6g sugar per liter at bottling."
+  ],
+  "steps": [
+    {"name": "Sanitize fermenter and equipment", "duration_min": 20},
+    {"name": "Heat mash water and mash in at 66C", "duration_min": 20, "notes": "Add grains and mix thoroughly."},
+    {"name": "Mash rest at 66C", "duration_min": 60, "notes": "Recirculate during mash."},
+    {"name": "Mash out at 78C", "duration_min": 10},
+    {"name": "Lauter and sparge to ~29L kettle volume", "duration_min": 35, "notes": "Use ~78C sparge water."},
+    {"name": "Boil 60 min", "duration_min": 60, "notes": "Add Styrian Golding at boil start."},
+    {"name": "Chill wort to ~23C", "duration_min": 30},
+    {"name": "Transfer to fermenter and add flavor hop (Saaz) + klar urt", "duration_min": 10},
+    {"name": "Pitch yeast", "duration_min": 5},
+    {"name": "Primary fermentation 18-22C", "duration_min": 20160, "notes": "~14 days"},
+    {"name": "Measure FG and bottle", "duration_min": 45, "notes": "Prime with ~6g/L sugar."},
+    {"name": "Condition bottles at room temp", "duration_min": 10080, "notes": "~7 days; then cellar cold."}
+  ]
+}
