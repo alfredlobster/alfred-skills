@@ -1,0 +1,3 @@
+interface:
+  display_name: "Research Intake Brief"
+  short_description: "Turn messy research input into a structured research brief and YAML handoff payload."
