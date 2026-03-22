@@ -1,0 +1,97 @@
+{
+  "recipe_name": "Midsummer Milkshake IPA",
+  "source": "https://www.hjemmebryggeren.dk/files/products/2699/1/pdf/midsummer%20milkshake%20ipa.pdf",
+  "batch_liters": 25,
+  "targets": {
+    "og": "1.052",
+    "fg": "1.012",
+    "abv": "5.3%",
+    "ibu": 20,
+    "ebc": 6.3
+  },
+  "grain_bill": [
+    "Pose 3 total ~5.300 kg: Pilsner malt, Wheat Blanc, Flaked Oats (split not specified)"
+  ],
+  "adjuncts": [
+    "Lactose at boil start (amount per kit pouch)",
+    "Dry hop blend on day 7 (Mosaic/Citra/Simcoe)",
+    "Priming sugar ~6 g/L at bottling"
+  ],
+  "notes": [
+    "No lid during boil.",
+    "Recirculate during mash.",
+    "Sparge with ~78C water to ~29L pre-boil volume.",
+    "Cool to ~80C for hopstand, then to ~23C for yeast pitch.",
+    "Ferment 18-20C.",
+    "Bottle around day 14 after FG check.",
+    "Condition warm to carbonate; then cellar 13-17C."
+  ],
+  "steps": [
+    {
+      "name": "Sanitize fermenter and equipment",
+      "duration_min": 20
+    },
+    {
+      "name": "Heat mash water and mash in at 66C",
+      "duration_min": 20,
+      "notes": "Add grain bill (pose 3) and mix well. Start recirculation."
+    },
+    {
+      "name": "Mash rest at 66C",
+      "duration_min": 60
+    },
+    {
+      "name": "Mash out at 78C",
+      "duration_min": 10
+    },
+    {
+      "name": "Lauter and sparge to ~29L kettle volume",
+      "duration_min": 35,
+      "notes": "Use ~78C sparge water."
+    },
+    {
+      "name": "Boil 60 min",
+      "duration_min": 60,
+      "notes": "Add bitter hops (pose 4 Simcoe) and lactose at boil start."
+    },
+    {
+      "name": "Cool to ~80C and run hopstand",
+      "duration_min": 20,
+      "notes": "Add aroma hops (pose 5 Citra/Mosaic), rest 20 min."
+    },
+    {
+      "name": "Cool wort to ~23C",
+      "duration_min": 20
+    },
+    {
+      "name": "Transfer to fermenter and pitch yeast",
+      "duration_min": 10,
+      "notes": "Pitch yeast from pose 2."
+    },
+    {
+      "name": "Primary fermentation at 18-20C",
+      "duration_min": 10080,
+      "notes": "~7 days until dry hop point."
+    },
+    {
+      "name": "Dry hop on day 7",
+      "duration_min": 10,
+      "notes": "Add pose 6 (Mosaic/Citra/Simcoe) in sanitized hop bag or hopspider."
+    },
+    {
+      "name": "Continue fermentation",
+      "duration_min": 10080,
+      "notes": "Additional ~7 days (to ~day 14 total)."
+    },
+    {
+      "name": "Measure FG and bottle",
+      "duration_min": 45,
+      "notes": "Prime with ~6g sugar per liter."
+    },
+    {
+      "name": "Bottle conditioning at room temperature",
+      "duration_min": 10080,
+      "notes": "~7 days, then move to cellar 13-17C."
+    }
+  ]
+}
