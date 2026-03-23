@@ -32,7 +32,7 @@ jobs:
             );
 
             if (hasExistingCopilotReview) {
-              core.info("Copilot review comment already exists for this pull request; skipping creation.");
+              console.log("Copilot review comment already exists for this pull request; skipping creation.");
               return;
             }
 
