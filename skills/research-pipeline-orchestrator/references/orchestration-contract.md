@@ -1,7 +1,8 @@
 # Orchestration Contract
 
 ## State Machine
-- INIT -> STAGE1 -> STAGE2 -> STAGE3 -> STAGE4 -> STAGE5 -> STAGE6 -> COMPLETE
+- Sequential mode: INIT -> STAGE1 -> STAGE2 -> STAGE3 -> STAGE4 -> STAGE5 -> STAGE6 -> COMPLETE
+- Branch mode: INIT -> STAGE1 -> STAGE2_BRANCHES -> MERGE2 -> STAGE3 -> STAGE4 -> STAGE5 -> STAGE6 -> COMPLETE
 - Any stage parse failure: PARSE_FAIL(stage)
 - Any execution failure: EXEC_FAIL(stage)
 
@@ -19,6 +20,11 @@ For each stage emit:
 - status: OK|WARN|FAIL
 - artifact_present: yes|no
 - notes: short
+- branch_id (branch mode only)
+
+For merge stage emit additionally:
+- merged_from_branches: [B1..Bn]
+- dedupe_count
 
 ## Final Verdict Logic
 - PASS: all stages OK or at most one WARN, no FAIL
