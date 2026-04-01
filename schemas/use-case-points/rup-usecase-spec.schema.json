@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/alfredlobster/alfred-skills/schemas/use-case-points/rup-usecase-spec.schema.json",
+  "title": "Use Case Point Estimation - RUP Use Case Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "use_cases"],
+  "properties": {
+    "version": { "type": "string", "const": "ucp-rup-usecases-v1" },
+    "use_cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "primary_actor_ids", "preconditions", "main_flow", "alternate_flows", "exception_flows", "postconditions"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^UC[0-9]+$" },
+          "name": { "type": "string" },
+          "primary_actor_ids": { "type": "array", "items": { "type": "string", "pattern": "^ACT[0-9]+$" } },
+          "secondary_actor_ids": { "type": "array", "items": { "type": "string", "pattern": "^ACT[0-9]+$" } },
+          "preconditions": { "type": "array", "items": { "type": "string" } },
+          "main_flow": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+          "alternate_flows": { "type": "array", "items": { "type": "string" } },
+          "exception_flows": { "type": "array", "items": { "type": "string" } },
+          "postconditions": { "type": "array", "items": { "type": "string" } },
+          "transaction_count": { "type": ["integer", "null"], "minimum": 0 },
+          "complexity_classification": { "type": "string", "enum": ["simple", "average", "complex", "unclassified"] }
+        }
+      }
+    }
+  }
+}

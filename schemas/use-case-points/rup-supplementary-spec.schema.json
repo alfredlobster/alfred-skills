@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/alfredlobster/alfred-skills/schemas/use-case-points/rup-supplementary-spec.schema.json",
+  "title": "Use Case Point Estimation - RUP Supplementary Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "non_functional_requirements"],
+  "properties": {
+    "version": { "type": "string", "const": "ucp-rup-supplementary-v1" },
+    "non_functional_requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "category", "statement"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^NFR[0-9]+$" },
+          "category": { "type": "string" },
+          "statement": { "type": "string" },
+          "priority": { "type": "string", "enum": ["must", "should", "could", "unknown"] },
+          "tcf_factor_refs": { "type": "array", "items": { "type": "string" } },
+          "ecf_factor_refs": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}
