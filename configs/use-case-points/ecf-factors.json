@@ -1,0 +1,20 @@
+{
+  "version": "ucp-ecf-v1",
+  "description": "Environmental Complexity Factor weights for Use Case Point estimation",
+  "factors": [
+    {"id": "E1", "name": "Familiarity with development process", "weight": 1.5},
+    {"id": "E2", "name": "Application experience", "weight": 0.5},
+    {"id": "E3", "name": "Object-oriented experience", "weight": 1.0},
+    {"id": "E4", "name": "Lead analyst capability", "weight": 0.5},
+    {"id": "E5", "name": "Motivation", "weight": 1.0},
+    {"id": "E6", "name": "Stable requirements", "weight": 2.0},
+    {"id": "E7", "name": "Part-time staff", "weight": -1.0},
+    {"id": "E8", "name": "Difficult programming language", "weight": -1.0}
+  ],
+  "ratingScale": {
+    "min": 0,
+    "max": 5,
+    "description": "0 = no influence, 5 = strong influence"
+  },
+  "formula": "ECF = 1.4 + (-0.03 * sum(weight * rating))"
+}
