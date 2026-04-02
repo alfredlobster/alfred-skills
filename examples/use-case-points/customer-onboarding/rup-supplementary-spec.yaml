@@ -1,0 +1,20 @@
+version: ucp-rup-supplementary-v1
+non_functional_requirements:
+  - id: NFR1
+    category: performance
+    statement: Portal should respond quickly during normal business use
+    priority: should
+    tcf_factor_refs: [T2]
+    ecf_factor_refs: []
+  - id: NFR2
+    category: security
+    statement: Access must be role-based
+    priority: must
+    tcf_factor_refs: [T11]
+    ecf_factor_refs: []
+  - id: NFR3
+    category: auditability
+    statement: Changes must be auditable
+    priority: must
+    tcf_factor_refs: []
+    ecf_factor_refs: []

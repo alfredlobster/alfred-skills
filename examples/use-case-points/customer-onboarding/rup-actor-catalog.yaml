@@ -1,0 +1,17 @@
+version: ucp-rup-actors-v1
+actors:
+  - id: ACT1
+    name: Operations Manager
+    description: Internal GUI user who performs onboarding
+    classification: complex
+    classification_rationale: Human user via GUI
+  - id: ACT2
+    name: Finance Reviewer
+    description: Internal GUI user who reviews exceptional billing cases
+    classification: complex
+    classification_rationale: Human user via GUI
+  - id: ACT3
+    name: Activation Service
+    description: External activation integration service
+    classification: simple
+    classification_rationale: External system/API interaction

@@ -1,0 +1,44 @@
+run:
+  method: hypothesis-free-deterministic-ucp
+  tcf_ratings:
+    T1: 1
+    T2: 3
+    T3: 3
+    T4: 2
+    T5: 2
+    T6: 3
+    T7: 3
+    T8: 1
+    T9: 3
+    T10: 1
+    T11: 4
+    T12: 1
+    T13: 1
+  ecf_ratings:
+    E1: 4
+    E2: 4
+    E3: 4
+    E4: 3
+    E5: 4
+    E6: 3
+    E7: 1
+    E8: 1
+actor_breakdown:
+  simple: 1
+  average: 0
+  complex: 2
+  uaw: 7
+use_case_breakdown:
+  simple: 0
+  average: 0
+  complex: 1
+  uucw: 15
+uucp: 22
+technical_factor_sum: 25.5
+technical_complexity_factor: 0.855
+environmental_factor_sum: 16.5
+environmental_complexity_factor: 0.905
+ucp: 17.028
+notes:
+  - Expected output for benchmark verification only
+  - Effort conversion deliberately omitted until productivity factor is agreed

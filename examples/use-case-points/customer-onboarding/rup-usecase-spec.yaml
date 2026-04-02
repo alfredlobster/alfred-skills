@@ -1,0 +1,28 @@
+version: ucp-rup-usecases-v1
+use_cases:
+  - id: UC1
+    name: Onboard customer account
+    primary_actor_ids: [ACT1]
+    secondary_actor_ids: [ACT2, ACT3]
+    preconditions:
+      - Agreement is signed
+      - Required customer details are available
+    main_flow:
+      - Operations enters customer details
+      - System validates required fields
+      - System checks for existing customer
+      - Operations enters billing details
+      - System validates billing details
+      - System creates customer account
+      - System activates the account
+      - System sends confirmation to operations
+    alternate_flows:
+      - Finance reviews unusual billing details before activation
+    exception_flows:
+      - Duplicate customer detected
+      - Billing validation fails
+      - Activation service unavailable
+    postconditions:
+      - Customer account exists and is active
+    transaction_count: 8
+    complexity_classification: complex
