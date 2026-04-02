@@ -1,0 +1,65 @@
+version: ucp-requirements-v1
+session_id: sample-customer-onboarding-001
+stakeholders:
+  - name: Anna Jensen
+    role: Operations Manager
+business_goals:
+  - id: BG1
+    statement: Reduce manual effort and cycle time in customer onboarding
+    priority: must
+actors:
+  - id: ACT1
+    name: Operations Manager
+    description: Internal user who performs customer onboarding
+    goals:
+      - Create and activate customer accounts
+  - id: ACT2
+    name: Finance Reviewer
+    description: Internal user who reviews exceptional billing cases
+  - id: ACT3
+    name: Activation Service
+    description: External service used to activate customer accounts
+use_case_candidates:
+  - id: UC1
+    name: Onboard customer account
+    business_goal_ids: [BG1]
+    primary_actor_ids: [ACT1]
+    secondary_actor_ids: [ACT2, ACT3]
+    trigger: Signed agreement received
+    preconditions:
+      - Agreement is signed
+      - Required customer details are available
+    success_outcome: Customer account is created and activated
+    main_success_scenario:
+      - Operations enters customer details
+      - System validates required fields
+      - System checks for existing customer
+      - Operations enters billing details
+      - System validates billing details
+      - System creates customer account
+      - System activates the account through activation service
+      - System sends confirmation to operations
+    alternate_flows:
+      - Finance reviews unusual billing details before activation
+    exception_flows:
+      - Duplicate customer detected
+      - Billing validation fails
+      - Activation service unavailable
+    nfr_refs: [NFR1, NFR2, NFR3]
+non_functional_requirements:
+  - id: NFR1
+    category: performance
+    statement: Portal should respond quickly during normal business use
+    priority: should
+  - id: NFR2
+    category: security
+    statement: Access must be role-based
+    priority: must
+  - id: NFR3
+    category: auditability
+    statement: Changes must be auditable
+    priority: must
+assumptions:
+  - Customer does not use the internal portal directly
+open_questions:
+  - What threshold triggers finance review?
