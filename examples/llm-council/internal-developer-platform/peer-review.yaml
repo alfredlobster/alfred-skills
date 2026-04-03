@@ -1,0 +1,47 @@
+version: llm-council-peer-review-v1
+task: Should we adopt an internal developer platform strategy for a 50-team engineering organization?
+anonymized_responses:
+  Response A: Yes, but only if the platform is treated as a product and not another silo. Focus on reducing friction, standardizing workflows, and enabling teams without centralizing all delivery.
+  Response B: Probably yes. The strongest case is when tooling fragmentation and compliance overhead are already slowing teams down. Success depends on governance and product-management discipline for the platform itself.
+  Response C: Yes, if the organization is large enough to justify the abstraction. Start with the highest-friction developer journeys and prove value incrementally.
+reviews:
+  - model: anthropic/claude-sonnet-4-6
+    status: ok
+    review_text: |
+      Response A is strongest on anti-silo reasoning.
+      Response B is strongest on governance realism.
+      Response C is practical but thinner.
+      FINAL RANKING:
+      1. Response B
+      2. Response A
+      3. Response C
+    parsed_ranking:
+      - Response B
+      - Response A
+      - Response C
+  - model: openai/gpt-5.4
+    status: ok
+    review_text: |
+      Response B is the most balanced and implementation-aware.
+      Response A is also strong, especially on organizational design.
+      Response C is sound but less complete.
+      FINAL RANKING:
+      1. Response B
+      2. Response A
+      3. Response C
+    parsed_ranking:
+      - Response B
+      - Response A
+      - Response C
+  - model: google/gemini-3-pro-preview
+    status: ok
+    review_text: |
+      Response A and B are both strong. B edges out A because it better ties the answer to observable organizational symptoms.
+      FINAL RANKING:
+      1. Response B
+      2. Response A
+      3. Response C
+    parsed_ranking:
+      - Response B
+      - Response A
+      - Response C
