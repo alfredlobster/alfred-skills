@@ -18,6 +18,7 @@ Use this skill for **authorized, low-impact** security reviews of public web ser
 - checks `OPTIONS` / `Allow`
 - checks whether `TRACE` appears enabled
 - checks a short list of common sensitive paths for obvious exposure
+- adds AWS API Gateway–specific heuristics when the target is an `execute-api` endpoint
 - writes JSON and Markdown findings
 
 ## What it does not do

@@ -122,6 +122,36 @@ def tls_info(hostname: str, port: int = 443, timeout: int = 8):
             return {"certificate": cert, "cipher": cipher, "version": ssock.version()}
 
 
+def classify_apigw_response(resp: dict) -> list[dict]:
+    out = []
+    headers = {k.lower(): v for k, v in resp.get("headers", {}).items()}
+    body = resp.get("body_preview", "") or ""
+    err_type = headers.get("x-amzn-errortype", "")
+    status = resp.get("status")
+
+    if err_type == "ForbiddenException" and status == 403:
+        out.append({
+            "kind": "apigw_forbidden_wall",
+            "summary": "API Gateway is denying anonymous access with ForbiddenException",
+        })
+    if status == 403 and "Missing Authentication Token" in body:
+        out.append({
+            "kind": "apigw_missing_auth_token",
+            "summary": "AWS API Gateway Missing Authentication Token pattern observed",
+        })
+    if status == 404 and '"error": "not found"' in body.lower():
+        out.append({
+            "kind": "application_not_found_json",
+            "summary": "Application-level JSON 404 observed behind API Gateway",
+        })
+    if headers.get("access-control-allow-origin") == "*":
+        out.append({
+            "kind": "wildcard_cors",
+            "summary": "Wildcard CORS observed on this response",
+        })
+    return out
+
+
 def check_target(target: str):
     findings: list[Finding] = []
     evidence = {}
@@ -134,6 +164,8 @@ def check_target(target: str):
 
     https_url = base if parsed.scheme == "https" else f"https://{host}"
     http_url = f"http://{host}"
+    is_apigw = host.endswith('.execute-api.eu-west-1.amazonaws.com') or '.execute-api.' in host
+    evidence["platform_guess"] = "aws-api-gateway" if is_apigw else "generic-web-service"
     root_https = request_once(https_url, method="GET")
     root_http = request_once(http_url, method="GET")
     evidence["root_https"] = root_https
@@ -141,6 +173,14 @@ def check_target(target: str):
 
     if not root_https["ok"] and root_https["status"] is None:
         findings.append(Finding("high", "HTTPS unreachable", target, root_https["error"] or "No HTTPS response", "Ensure HTTPS is available and reachable.", "transport"))
+
+    if is_apigw:
+        evidence["apigw_root_classification"] = classify_apigw_response(root_https)
+        root_headers = {k.lower(): v for k, v in root_https.get("headers", {}).items()}
+        if root_headers.get("x-amzn-errortype") == "ForbiddenException" and root_https.get("status") == 403:
+            findings.append(Finding("info", "AWS API Gateway anonymous access blocked", target, "Root response returned 403 ForbiddenException", "This is usually expected for protected routes; continue testing only where authorized.", "aws-apigw"))
+        if root_https.get("status") == 404 and '"error": "not found"' in (root_https.get("body_preview") or "").lower():
+            findings.append(Finding("info", "Application-level JSON 404 behind API Gateway", target, root_https.get("body_preview", ""), "This suggests the request is reaching application logic rather than being stopped at the edge.", "aws-apigw"))
     if root_http.get("status") in (200, 204):
         findings.append(Finding("medium", "HTTP served without redirect", target, f"HTTP {root_http['status']} at {http_url}", "Redirect HTTP to HTTPS or disable plain HTTP.", "transport"))
     elif root_http.get("status") in (301, 302, 307, 308):
@@ -186,6 +226,8 @@ def check_target(target: str):
     preflight_headers = {k.lower(): v for k, v in cors_preflight["headers"].items()}
     if cors_preflight.get("status") == 200 and preflight_headers.get("access-control-allow-origin") == "*":
         findings.append(Finding("medium", "Permissive CORS preflight response", target, json.dumps(preflight_headers), "Tighten preflight origin policy to intended callers only.", "cors"))
+        if is_apigw:
+            findings.append(Finding("medium", "AWS API Gateway preflight returns wildcard CORS", target, json.dumps(preflight_headers), "Review API Gateway/Lambda integration CORS policy to ensure wildcard origin is intentional.", "aws-apigw"))
     if preflight_headers.get("access-control-allow-credentials", "").lower() == "true" and preflight_headers.get("access-control-allow-origin") == "*":
         findings.append(Finding("high", "Preflight allows credentials with wildcard origin", target, json.dumps(preflight_headers), "Do not allow credentials with wildcard origin on preflight responses.", "cors"))
     allow_headers = (preflight_headers.get("access-control-allow-headers") or "").lower()
@@ -207,6 +249,8 @@ def check_target(target: str):
         findings.append(Finding("high", "Authenticated-style request unexpectedly succeeded", target, f"Status 200 with invalid auth material at {https_url}", "Verify authentication enforcement for this route.", "auth"))
     if auth_headers.get("access-control-allow-origin") == "*":
         findings.append(Finding("medium", "Wildcard CORS on auth-flavored request", target, json.dumps(auth_headers), "Restrict cross-origin behavior on authenticated or credential-bearing flows.", "cors"))
+        if is_apigw:
+            findings.append(Finding("medium", "AWS API Gateway returns wildcard CORS on auth-flavored error response", target, json.dumps(auth_headers), "Verify whether browser-based requests with Authorization or cookies should ever receive wildcard CORS headers.", "aws-apigw"))
     if auth_headers.get("access-control-allow-credentials", "").lower() == "true" and auth_headers.get("access-control-allow-origin") == "*":
         findings.append(Finding("high", "Auth-flavored response combines wildcard origin with credentials", target, json.dumps(auth_headers), "Restrict credentialed cross-origin responses.", "cors"))
 
