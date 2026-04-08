@@ -70,8 +70,8 @@ def opener_no_redirect():
     return build_opener(NoRedirectHandler())
 
 
-def request_once(url: str, method: str = "GET", headers: dict | None = None, timeout: int = 10):
-    req = Request(url, method=method, headers={"User-Agent": USER_AGENT, **(headers or {})})
+def request_once(url: str, method: str = "GET", headers: dict | None = None, timeout: int = 10, body: bytes | None = None):
+    req = Request(url, data=body, method=method, headers={"User-Agent": USER_AGENT, **(headers or {})})
     op = opener_no_redirect()
     start = time.time()
     try:
@@ -172,6 +172,43 @@ def check_target(target: str):
         findings.append(Finding("medium", "Wildcard CORS with arbitrary Origin", target, cors_headers.get("access-control-allow-origin", ""), "Restrict allowed origins.", "cors"))
     if cors_headers.get("access-control-allow-credentials", "").lower() == "true" and cors_headers.get("access-control-allow-origin") == "*":
         findings.append(Finding("high", "CORS allows credentials with wildcard origin", target, json.dumps(cors_headers), "Never combine ACAO=* with credentials.", "cors"))
+
+    cors_preflight = request_once(
+        https_url,
+        method="OPTIONS",
+        headers={
+            "Origin": TEST_ORIGIN,
+            "Access-Control-Request-Method": "POST",
+            "Access-Control-Request-Headers": "authorization,content-type,x-api-key",
+        },
+    )
+    evidence["cors_preflight"] = cors_preflight
+    preflight_headers = {k.lower(): v for k, v in cors_preflight["headers"].items()}
+    if cors_preflight.get("status") == 200 and preflight_headers.get("access-control-allow-origin") == "*":
+        findings.append(Finding("medium", "Permissive CORS preflight response", target, json.dumps(preflight_headers), "Tighten preflight origin policy to intended callers only.", "cors"))
+    if preflight_headers.get("access-control-allow-credentials", "").lower() == "true" and preflight_headers.get("access-control-allow-origin") == "*":
+        findings.append(Finding("high", "Preflight allows credentials with wildcard origin", target, json.dumps(preflight_headers), "Do not allow credentials with wildcard origin on preflight responses.", "cors"))
+    allow_headers = (preflight_headers.get("access-control-allow-headers") or "").lower()
+    if "authorization" in allow_headers or "x-api-key" in allow_headers:
+        findings.append(Finding("info", "Preflight advertises auth-related headers", target, preflight_headers.get("access-control-allow-headers", ""), "Verify that auth-bearing browser requests are intended and CORS-restricted appropriately.", "cors"))
+
+    auth_probe = request_once(
+        https_url,
+        method="GET",
+        headers={
+            "Origin": TEST_ORIGIN,
+            "Authorization": "Bearer obviously-invalid-token",
+            "Cookie": "session=obviously-invalid",
+        },
+    )
+    evidence["auth_probe"] = auth_probe
+    auth_headers = {k.lower(): v for k, v in auth_probe["headers"].items()}
+    if auth_probe.get("status") == 200:
+        findings.append(Finding("high", "Authenticated-style request unexpectedly succeeded", target, f"Status 200 with invalid auth material at {https_url}", "Verify authentication enforcement for this route.", "auth"))
+    if auth_headers.get("access-control-allow-origin") == "*":
+        findings.append(Finding("medium", "Wildcard CORS on auth-flavored request", target, json.dumps(auth_headers), "Restrict cross-origin behavior on authenticated or credential-bearing flows.", "cors"))
+    if auth_headers.get("access-control-allow-credentials", "").lower() == "true" and auth_headers.get("access-control-allow-origin") == "*":
+        findings.append(Finding("high", "Auth-flavored response combines wildcard origin with credentials", target, json.dumps(auth_headers), "Restrict credentialed cross-origin responses.", "cors"))
 
     options_resp = request_once(https_url, method="OPTIONS")
     trace_resp = request_once(https_url, method="TRACE")

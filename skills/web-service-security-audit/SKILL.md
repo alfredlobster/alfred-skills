@@ -14,6 +14,7 @@ Use this skill for **authorized, low-impact** security reviews of public web ser
 - checks common security headers
 - checks cookie flags from `Set-Cookie`
 - checks CORS posture with a synthetic `Origin`
+- runs a deeper browser-style CORS/auth-response probe
 - checks `OPTIONS` / `Allow`
 - checks whether `TRACE` appears enabled
 - checks a short list of common sensitive paths for obvious exposure
