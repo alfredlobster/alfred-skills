@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/alfredlobster/alfred-skills/schemas/use-case-points/requirements-interview.schema.json",
+  "title": "Use Case Point Estimation - Requirements Interview Output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "version",
+    "session_id",
+    "stakeholders",
+    "business_goals",
+    "actors",
+    "use_case_candidates",
+    "assumptions",
+    "open_questions"
+  ],
+  "properties": {
+    "version": { "type": "string", "const": "ucp-requirements-v1" },
+    "session_id": { "type": "string", "minLength": 1 },
+    "captured_at": { "type": "string", "format": "date-time" },
+    "stakeholders": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "role"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "role": { "type": "string", "minLength": 1 },
+          "organization": { "type": "string" },
+          "contact": { "type": "string" }
+        }
+      }
+    },
+    "business_goals": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^BG[0-9]+$" },
+          "statement": { "type": "string", "minLength": 1 },
+          "priority": { "type": "string", "enum": ["must", "should", "could", "won't", "unknown"] },
+          "success_metrics": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "actors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "name", "description"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ACT[0-9]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "description": { "type": "string", "minLength": 1 },
+          "goals": { "type": "array", "items": { "type": "string" } },
+          "triggers": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "use_case_candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "primary_actor_ids",
+          "trigger",
+          "preconditions",
+          "success_outcome",
+          "main_success_scenario",
+          "alternate_flows",
+          "exception_flows",
+          "nfr_refs"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^UC[0-9]+$" },
+          "name": { "type": "string", "minLength": 1 },
+          "business_goal_ids": { "type": "array", "items": { "type": "string", "pattern": "^BG[0-9]+$" } },
+          "primary_actor_ids": { "type": "array", "minItems": 1, "items": { "type": "string", "pattern": "^ACT[0-9]+$" } },
+          "secondary_actor_ids": { "type": "array", "items": { "type": "string", "pattern": "^ACT[0-9]+$" } },
+          "trigger": { "type": "string", "minLength": 1 },
+          "preconditions": { "type": "array", "items": { "type": "string" } },
+          "success_outcome": { "type": "string", "minLength": 1 },
+          "main_success_scenario": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+          "alternate_flows": { "type": "array", "items": { "type": "string" } },
+          "exception_flows": { "type": "array", "items": { "type": "string" } },
+          "nfr_refs": { "type": "array", "items": { "type": "string", "pattern": "^NFR[0-9]+$" } },
+          "notes": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "non_functional_requirements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "category", "statement"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^NFR[0-9]+$" },
+          "category": { "type": "string", "enum": ["performance", "security", "availability", "scalability", "usability", "compliance", "auditability", "other"] },
+          "statement": { "type": "string", "minLength": 1 },
+          "priority": { "type": "string", "enum": ["must", "should", "could", "unknown"] }
+        }
+      }
+    },
+    "assumptions": { "type": "array", "items": { "type": "string" } },
+    "open_questions": { "type": "array", "items": { "type": "string" } }
+  }
+}

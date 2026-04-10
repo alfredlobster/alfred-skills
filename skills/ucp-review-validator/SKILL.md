@@ -20,7 +20,7 @@ This skill can review one or more of:
 
 ## Output
 Return a validation report aligned with:
-- `schemas/use-case-points/ucp-validation-report.schema.json`
+- `skills/use-case-points-core/schemas/ucp-validation-report.schema.json`
 
 ## Required checks
 Always assess:

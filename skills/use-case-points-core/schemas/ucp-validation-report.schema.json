@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/alfredlobster/alfred-skills/schemas/use-case-points/ucp-validation-report.schema.json",
+  "title": "UCP Validation Report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "status", "findings"],
+  "properties": {
+    "version": { "type": "string", "const": "ucp-validation-report-v1" },
+    "status": { "type": "string", "enum": ["pass", "warning", "fail"] },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["severity", "category", "message"],
+        "properties": {
+          "severity": { "type": "string", "enum": ["error", "warning", "info"] },
+          "category": { "type": "string", "enum": ["completeness", "consistency", "classification_readiness", "estimation_readiness"] },
+          "location": { "type": "string" },
+          "message": { "type": "string", "minLength": 1 },
+          "recommended_action": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -15,7 +15,7 @@ Required inputs:
 - TCF ratings
 - ECF ratings
 
-These inputs must conform to the schemas and contracts in `schemas/use-case-points/` and `configs/use-case-points/`.
+These inputs must conform to the schemas and contracts in `skills/use-case-points-core/schemas/` and `skills/use-case-points-core/configs/`.
 
 ## Deterministic boundary
 - Do not invent formulas

@@ -12,7 +12,7 @@ Capture stakeholder intent and normalize it into the canonical intermediate sche
 
 ## Output boundary
 This skill must output only the intermediate YAML structure defined by:
-- `schemas/use-case-points/requirements-interview.schema.json`
+- `skills/use-case-points-core/schemas/requirements-interview.schema.json`
 
 Do **not** produce UML, formal RUP artifacts, estimates, or diagrams.
 
