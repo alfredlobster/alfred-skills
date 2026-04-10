@@ -5,7 +5,7 @@ description: Shared contracts, ranking logic, references, and runnable examples 
 
 # LLM Council Core
 
-This folder is the shared home for reusable LLM Council assets that were previously split across repo-level `tools/llm_council`, `references/llm-council`, and `examples/llm-council`.
+This folder is the shared home for reusable LLM Council assets and is now the canonical location for shared council contracts, ranking logic, references, and examples under `skills/`.
 
 ## Contents
 - `scripts/` — contracts, ranking logic, and example runners
