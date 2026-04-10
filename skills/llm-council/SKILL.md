@@ -43,3 +43,7 @@ Provide one clear entry point for running the full council process while preserv
 - comparing strategic options
 - reviewing architectures or plans
 - stress-testing assumptions through multiple model perspectives
+
+
+## Shared assets
+- Common contracts, ranking logic, and runnable examples now live under `skills/llm-council-core/`.

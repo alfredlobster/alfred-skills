@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/alfredlobster/alfred-skills/schemas/use-case-points/requirements-interview.schema.json",
+  "$id": "https://github.com/alfredlobster/alfred-skills/skills/use-case-points-core/schemas/requirements-interview.schema.json",
   "title": "Use Case Point Estimation - Requirements Interview Output",
   "type": "object",
   "additionalProperties": false,

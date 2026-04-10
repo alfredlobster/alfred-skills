@@ -5,7 +5,7 @@ import yaml
 from ranking import calculate_aggregate_rankings
 
 ROOT = Path(__file__).resolve().parents[2]
-EX = ROOT / 'examples' / 'llm-council' / 'internal-developer-platform'
+EX = ROOT.parent / 'examples' / 'internal-developer-platform'
 
 intake = yaml.safe_load(open(EX / 'intake.yaml', 'r', encoding='utf-8'))
 first = yaml.safe_load(open(EX / 'first-opinions.yaml', 'r', encoding='utf-8'))

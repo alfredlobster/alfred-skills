@@ -9,7 +9,7 @@ Transform normalized interview output into formal RUP artifacts.
 
 ## Inputs
 - One intermediate YAML document that validates against:
-  - `schemas/use-case-points/requirements-interview.schema.json`
+  - `skills/use-case-points-core/schemas/requirements-interview.schema.json`
 
 ## Outputs
 Produce only these V1 artifacts:
@@ -17,7 +17,7 @@ Produce only these V1 artifacts:
 2. Use-case specifications
 3. Supplementary specification
 
-These must validate against the corresponding schemas in `schemas/use-case-points/`.
+These must validate against the corresponding schemas in `skills/use-case-points-core/schemas/`.
 
 ## Boundaries
 - Do not interview stakeholders

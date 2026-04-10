@@ -135,8 +135,8 @@ def compute_ucp(estimation_input: Dict[str, Any]) -> Dict[str, Any]:
 
     uucp = uaw + uucw
 
-    tcf_cfg = _load_json(ROOT / 'configs/use-case-points/tcf-factors.json')
-    ecf_cfg = _load_json(ROOT / 'configs/use-case-points/ecf-factors.json')
+    tcf_cfg = _load_json(ROOT / 'configs/tcf-factors.json')
+    ecf_cfg = _load_json(ROOT / 'configs/ecf-factors.json')
 
     t_sum = sum(item['weight'] * estimation_input['tcf_ratings'][item['id']] for item in tcf_cfg['factors'])
     tcf = 0.6 + (0.01 * t_sum)
