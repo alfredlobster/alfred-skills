@@ -1,0 +1,17 @@
+version: llm-council-intake-v1
+task: Should we adopt an internal developer platform strategy for a 50-team engineering organization?
+context:
+  - current state: fragmented tooling and inconsistent delivery workflows
+  - desired state: lower friction, better governance, and improved developer experience
+council_models:
+  - anthropic/claude-sonnet-4-6
+  - openai/gpt-5.4
+  - google/gemini-3-pro-preview
+chairman_model: anthropic/claude-opus-4-6
+evaluation_axes:
+  - correctness
+  - practicality
+  - strategic fit
+  - implementation realism
+notes:
+  - keep first opinions independent
