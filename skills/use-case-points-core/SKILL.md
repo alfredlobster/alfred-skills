@@ -11,7 +11,8 @@ This folder is the shared home for reusable UCP assets that were previously scat
 - `schemas/` — JSON schemas for interview, RUP artifacts, estimation input, and validation report
 - `configs/` — actor/use-case classification rules plus TCF/ECF factor definitions
 - `scripts/contracts.py` — deterministic calculator / validation helper module
-- `references/README.md` — original notes from the former repo-level tools folder
+- `references/` — workflow notes and counting rules
+- `examples/` — canonical example artifacts for validation and estimation flows
 
 ## Intent
 - Keep UCP assets self-contained under `skills/`
